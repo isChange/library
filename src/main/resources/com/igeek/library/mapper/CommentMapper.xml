@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.igeek.library.mapper.CommentMapper">
+    <insert id="addComment" useGeneratedKeys="true" keyProperty="id">
+        insert  into  `comment` values (null ,#{readerId}, #{bookId},#{content},#{createDate})
+    </insert>
+    <delete id="del">
+        delete from `comment` where id = #{id} and `book_id` = #{bookId}
+    </delete>
+
+    <select id="findAllByBookId" resultType="com.igeek.library.Vo.CommentVo">
+        select `reader_info`.`name` ,`comment`.content ,`comment`.`createDate`
+            from `reader_info` , `comment`
+                where `reader_info`.reader_id = `comment`.reader_id
+                    and `comment`.`book_id` = #{bookId}
+    </select>
+    <select id="findAll" resultType="com.igeek.library.Vo.CommentVo2">
+        SELECT `comment`.id , `reader_info`.`name` AS readerName ,`book_info`.`name` AS bookName,
+               `comment`.createDate,`comment`.content FROM `reader_info` ,`book_info` ,`comment`
+            WHERE `reader_info`.reader_id = `comment`.reader_id
+              AND `book_info`.book_id = `comment`.book_id
+    </select>
+    <select id="findCommentVo2ByBookId" resultType="com.igeek.library.Vo.CommentVo2">
+        SELECT `comment`.id , `reader_info`.`name` AS readerName ,`book_info`.`name` AS bookName,
+               `comment`.createDate,`comment`.content FROM `reader_info` ,`book_info` ,`comment`
+        WHERE `reader_info`.reader_id = `comment`.reader_id
+          AND `book_info`.book_id = `comment`.book_id
+            AND `comment`.`book_id` = #{bookId}
+    </select>
+</mapper>

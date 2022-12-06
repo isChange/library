@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igeek.library.mapper.BookInfoMapper" >
+    <resultMap id="bookId" type="BookInfo">
+        <id column="book_id" property="bookId"></id>
+        <result property="classId" column="class_id"></result>
+        <result property="pubDate" column="pub_date"></result>
+        <result property="isbn" column="ISBN"></result>
+    </resultMap>
+    <insert id="addBook">
+        insert into `book_info` values (null ,#{name} ,#{author} ,#{publish} ,#{isbn},
+                                        #{introduction} ,#{language} ,#{price} ,#{pubDate} ,
+                                        #{classId} ,#{number})
+    </insert>
+    <update id="updateBookById">
+        update `book_info` set name = #{name}, author = #{author} , publish = #{publish},
+                                isbn = #{isbn},introduction = #{introduction} , language = #{language},
+                               price = #{price},pub_date = #{pubDate},  class_id = #{classId} , number = #{number}
+                                where book_id = #{bookId}
+    </update>
+    <delete id="delByBookId">
+        delete from `book_info` where book_id = #{id}
+    </delete>
+    <update id="delNumberByBookId">
+        update `book_info` set `number` = `number` - 1 where `book_id` = #{id}
+    </update>
+    <update id="addNumberByBookId">
+        update `book_info` set `number` = `number` + 1 where `book_id` = #{id}
+    </update>
+
+    <select id="findAll"  resultMap="bookId">
+        select * from `book_info`
+    </select>
+    <select id="findAllByLike" resultMap="bookId">
+        select * from `book_info` where `name` like '%${name}%'
+    </select>
+    <select id="findBookById" resultMap="bookId">
+        select * from `book_info` where `book_id` = #{id}
+    </select>
+    <select id="bookPageList" resultType="com.igeek.library.entity.BookInfo">
+        select * from `book_info`
+    </select>
+    <select id="findBookByName" resultType="com.igeek.library.entity.BookInfo">
+        select * from `book_info` where `name` =#{bookName}
+    </select>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+<!--    <import resource="spring-service.xml"></import>-->
+    <context:component-scan base-package="com.igeek.library.controller"></context:component-scan>
+    <mvc:default-servlet-handler/>
+    <mvc:resources location="/static/img" mapping="/img/**"/>
+    <mvc:resources location="/static/js" mapping="/js/**"/>
+    <mvc:resources location="/static/css" mapping="/css/**"/>
+
+    <!-- 自动下载最新版本的映射处理器，处理适配器 （加上转换器的id，这样转换器起作用了） -->
+    <mvc:annotation-driven conversion-service="conversionService" />
+
+
+    <!-- 转换器配置 -->
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <!--在这里可以配置多个转换器-->
+                <!--编写的转换类-->
+                <bean class="com.igeek.library.config.DateConventer" />
+            </set>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven/>
+    <mvc:view-controller path="/" view-name="index"></mvc:view-controller>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+
+</beans>

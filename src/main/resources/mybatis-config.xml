@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+    <!--    以包为单位群体起别名  默认别名为类名-->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--打印查询语句-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <typeAliases>
+        <package name="com.igeek.library.entity"/>
+    </typeAliases>
+    <plugins>
+        <!--设置分页插件-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+    <!--映射的mapper接口文件-->
+
+    <!--    以包为单位群体引入映射的mapper接口文件-->
+    <!--   前提：要保持接口包名和文件的包名一致（即在同一包下）-->
+    <!--        要保持接名和文件名一致-->
+   <!-- <mappers>
+        <package name="com.igeek.library.mapper"/>
+    </mappers>-->
+</configuration>

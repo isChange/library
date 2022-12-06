@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igeek.library.mapper.ReaderInfoMapper" >
+    <insert id="addReader" useGeneratedKeys="true" keyProperty="readerId">
+        insert into `reader_info` values (#{readerId} ,#{name} ,#{sex} ,#{birth} ,#{address} ,#{phone},0)
+    </insert>
+    <update id="updateById">
+        update `reader_info` set name = #{name} ,sex = #{sex} , birth = #{birth} ,
+                                 address = #{address} ,phone = #{phone}
+                                    where reader_id = #{readerId}
+
+    </update>
+    <update id="updateBalance">
+        update `reader_info` set `balance` = `balance` + #{balance} where `reader_id` = #{readerId}
+    </update>
+    <update id="updateBalanceDiv">
+        update `reader_info` set `balance` =  #{balance} where `reader_id` = #{readerId}
+    </update>
+    <delete id="delById">
+        delete from `reader_info` where reader_id = #{id}
+    </delete>
+
+    <select id="list" resultType="com.igeek.library.entity.ReaderInfo">
+        select * from `reader_info`
+    </select>
+    <select id="findReaderById" resultType="com.igeek.library.entity.ReaderInfo">
+        select * from `reader_info` where `reader_id` = #{id}
+    </select>
+</mapper>

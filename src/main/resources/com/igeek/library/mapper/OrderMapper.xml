@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.igeek.library.mapper.OrderMapper">
+
+    <insert id="addOrder" useGeneratedKeys="true" keyProperty="id">
+        insert  into  `order` values (null , #{readerId} , #{title} ,#{createDate} ,#{price})
+    </insert>
+    <select id="findAllByReaderId" resultType="com.igeek.library.Vo.OrderVo">
+        select `reader_card`.username as name , `order`.title , `order`.createDate , `order`.price
+            FROM `order`,`reader_card`
+                where `order`.`reader_id` = `reader_card`.`reader_id`
+                    and `order`.`reader_id` = #{readerId}
+    </select>
+    <select id="findAll" resultType="com.igeek.library.Vo.OrderVo2">
+        select `order`.`reader_id`,`reader_card`.username as name , `order`.title , `order`.createDate , `order`.price
+            FROM `order`,`reader_card`
+                where `order`.`reader_id` = `reader_card`.`reader_id`
+    </select>
+    <select id="search" resultType="com.igeek.library.Vo.OrderVo2">
+        select `order`.`reader_id`,`reader_card`.username as name , `order`.title , `order`.createDate , `order`.price
+            FROM `order`,`reader_card`
+                where `order`.`reader_id` = `reader_card`.`reader_id`
+                  and `order`.`reader_id` = #{readerId}
+    </select>
+</mapper>

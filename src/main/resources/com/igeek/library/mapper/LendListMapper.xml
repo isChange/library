@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.igeek.library.mapper.LendListMapper" >
+    <insert id="addLend">
+        insert into `lend_list` values (null ,#{bookId} ,#{readerId} ,#{lendDate} ,#{backDate})
+    </insert>
+    <update id="updateBackTimeById">
+        update `lend_list` set `back_date` = #{date} where `reader_id` = #{id} and `book_id` = #{bookId}
+    </update>
+    <delete id="del">
+        delete from `lend_list` where `ser_num` = #{serNum}
+    </delete>
+    <delete id="delByReaderIdAndBookId">
+        delete from `lend_list` where `reader_id` = #{readerId} and `book_id` = #{bookId}
+    </delete>
+
+    <select id="list" resultType="com.igeek.library.entity.LendList">
+        select * from `lend_list`
+    </select>
+    <select id="findLendByReaderId" resultType="com.igeek.library.entity.LendList">
+        select * from `lend_list` where `reader_id` = #{id}
+    </select>
+    <select id="findReaderLendVoById" resultType="com.igeek.library.Vo.ReaderLendVo">
+        SELECT `book_info`.`name` AS bookName ,`lend_list`.lend_date AS lendDate,`lend_list`.back_date AS backDate
+            FROM `lend_list` ,`book_info`
+                WHERE `lend_list`.book_id = `book_info`.book_id
+                  AND `lend_list`.reader_id = #{readerId}
+    </select>
+    <select id="findBySerNum" resultType="com.igeek.library.entity.LendList">
+        select * from `lend_list` where `ser_num` = #{serNum}
+    </select>
+</mapper>
